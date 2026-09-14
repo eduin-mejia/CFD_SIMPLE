@@ -61,7 +61,7 @@ def solve_x_momentum(ux, uy, P, axo, axw, axe, axs, axn, rho, mu, dx, dy, Gaus_i
             #Bottom
             ux_star_b[1:-1, 0] = ((P[:-1, 0]-P[1:, 0])*dy - axw[1:-1, 0]*ux_star[:-2, 0] - axe[1:-1, 0]*ux_star[2:, 0] - axn[1:-1, 0]*ux_star[1:-1, 1])/axo[1:-1, 0]
 
-            #Top
+            #Tops
             ux_star_b[1:-1, -1] = ((P[:-1, -1]-P[1:, -1])*dy - axw[1:-1, -1]*ux_star[:-2, -1] - axe[1:-1, -1]*ux_star[2:, -1] - axs[1:-1, -1]*ux_star[1:-1, -2])/axo[1:-1, -1]
 
             #Left
@@ -78,7 +78,7 @@ def solve_x_momentum(ux, uy, P, axo, axw, axe, axs, axn, rho, mu, dx, dy, Gaus_i
 
     # Final relaxation
     ux_star = alpha * ux_star + (1. - alpha) * ux
-
+    print(ux_star)
     return ux_star
 
 
