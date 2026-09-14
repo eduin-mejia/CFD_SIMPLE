@@ -5,6 +5,7 @@ from solve_y_momentum import solve_y_momentum
 from solve_P import solve_p
 from correct_ux import correct_ux
 from correct_uy import correct_uy
+import os 
 
 #***************************************************************
 # Pre-processing
@@ -70,6 +71,7 @@ print(f"Le nombre de Reynolds = {Re:.2f}")
 #***************************************************************
 # Main SIMPLE loop
 #***************************************************************
+os.makedirs("./Results", exist_ok=True)
 it = 1
 while it < it_max and erreur > conv:
     print(f"Itération {it}")
