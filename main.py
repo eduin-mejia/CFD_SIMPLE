@@ -86,8 +86,9 @@ while it < it_max and erreur > conv:
     P += relax_P * Delta_P
     erreur = np.max(np.abs(Delta_P)) / max(1e-12, np.max(np.abs(P)))
     graph_error[it] = erreur
+    it += 1
 
-    if it % 100 == 0:
+    if not (it < it_max and erreur > conv):
         y_vals = (np.arange(1, jmax+1) - 0.5) * dy
         plt.figure(1)
         plt.plot(4*1.5*left_velocity*y_vals/h*(1 - y_vals/h),y_vals, ls='--',c='black',label='Theo')
@@ -128,7 +129,7 @@ while it < it_max and erreur > conv:
         plt.savefig('./Results/Error.pdf')
         plt.show()
 
-    it += 1
+
 
 if it == it_max:
     print("L'algorithme n'a pas convergé")
