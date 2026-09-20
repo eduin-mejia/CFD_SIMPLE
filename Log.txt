@@ -1,0 +1,5 @@
+imax = 300, jmax = 30
+dx = 0.002 , dy = 0.002 
+length = 0.6, width = 0.06
+left_velocity = 0.016666666666666666
+Le nombre de Reynolds = 100.00

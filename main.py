@@ -39,11 +39,13 @@ apo = np.zeros_like(P)
 #***************************************************************
 # Physical parameters
 #***************************************************************
-dx = 2e-3
+dx =2e-3
 dy = 2e-3
 mu = 1e-1
 rho = 1e4
-left_velocity = 0.01
+Re = 100
+left_velocity = Re * mu /(dy*jmax*rho)
+#left_velocity = 0.25000
 
 h = dy * jmax
 ux[:, :] = left_velocity
@@ -52,12 +54,12 @@ ux[:, :] = left_velocity
 # Solver parameters
 #***************************************************************
 
-alpha = 1.
-relax_u = 0.7
-relax_P =0.3
+alpha = 0.3
+relax_u = 0.5
+relax_P =0.1
 conv = 1e-4
-conv_P = 1e-2
-it_max = 2000
+conv_P = 1e-4
+it_max = 10000
 Gaus_it_max = 10
 graph_error = np.zeros(it_max)
 erreur = 1.
@@ -65,8 +67,20 @@ erreur = 1.
 #***************************************************************
 # Reynolds Number Output
 #***************************************************************
-Re = dy * jmax * rho * left_velocity / mu
+#Re = dy * jmax * rho * left_velocity / mu
 print(f"Le nombre de Reynolds = {Re:.2f}")
+
+#***************************************************************
+# Main SIMPLE loop
+#***************************************************************
+
+with open("Log.txt" ,"w+") as f:
+    f.write(f"imax = {imax}, jmax = {jmax}\n")
+    f.write(f"dx = {dx} , dy = {dy} \n") 
+    f.write(f"length = {dx*imax}, width = {dy*jmax}\n" )
+    f.write(f"left_velocity = {left_velocity}\n") 
+    f.write(f"Le nombre de Reynolds = {Re:.2f}\n")
+    f.close()
 
 #***************************************************************
 # Main SIMPLE loop
@@ -114,7 +128,7 @@ while it < it_max and erreur > conv:
         x_vals = np.arange(1, imax+1) * dx
         plt.plot(x_vals[::5], P[::5, jmax//2],'+',c='red',label='Simu')
         plt.plot(x_vals, 8 * mu * 1.5 * left_velocity / (dy * jmax)**2 * (imax*dx - (np.arange(1, imax+1)-1)*dx), ls='--', c='black', label='Theo')
-        #plt.title('Pressure(x) vs theoretical')
+        plt.title('Pressure(x) vs theoretical')
         plt.xlabel('x (m)')
         plt.ylabel('Pressure (Pa)')
         plt.legend()
@@ -137,4 +151,4 @@ else:
     print(f"L'algorithme a convergé après {it} itérations")
 
 # Affichage final
-plt.show()
+#plt.show()

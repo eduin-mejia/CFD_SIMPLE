@@ -78,52 +78,6 @@ def solve_x_momentum(ux, uy, P, axo, axw, axe, axs, axn, rho, mu, dx, dy, Gaus_i
 
     # Final relaxation
     ux_star = alpha * ux_star + (1. - alpha) * ux
-    print(ux_star)
     return ux_star
 
 
-if __name__ == "__main__":
-
-    # -------------------------
-    # TEST
-    # -------------------------
-    imax = 5
-    jmax = 6
-
-    rho = 1.0
-    mu = 0.01
-    dx = 0.1
-    dy = 0.1
-
-    Gaus_it_max = 100
-    conv_P = 1e-6
-    alpha = 0.7
-    left_velocity = 1.0
-
-    # Campo de presión
-# Campo de presión
-    P = np.zeros((imax, jmax))
-
-# Test inicial simple
-    ux = np.ones((imax+1, jmax))
-    uy = np.ones((imax, jmax+1))
-
-# Boundary conditions
-    ux[0, :] = left_velocity
-    ux[-1, :] = ux[-2, :]
-    uy[:, 0] = 0
-    uy[:, -1] = 0
-
-# Coeficientes
-    axo = np.zeros_like(ux)
-    axw = np.zeros_like(ux)
-    axe = np.zeros_like(ux)
-    axs = np.zeros_like(ux)
-    axn = np.zeros_like(ux)
-    solve_x_momentum(
-        ux, uy, P,
-        axo, axw, axe, axs, axn,
-        rho, mu, dx, dy,
-        Gaus_it_max, conv_P,
-        alpha, left_velocity
-    )
