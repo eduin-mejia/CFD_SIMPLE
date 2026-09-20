@@ -94,3 +94,31 @@ Erreur L2 = 0.059580993211297284
 Numero de iteraciones = 3441
 erreur = 9.987947956035921e-06
 
+imax = 300, jmax = 30
+dx = 0.002 , dy = 0.002 
+length = 0.6, width = 0.06
+left_velocity = 0.0016666666666666668
+Le nombre de Reynolds = 10
+imax = 300, jmax = 30
+dx = 0.002 , dy = 0.002 
+length = 0.6, width = 0.06
+left_velocity = 0.016666666666666666
+Le nombre de Reynolds = 100
+Erreur L2 = 0.15399554796934725
+Numero de iteraciones = 1634
+erreur = 9.985114011551636e-06
+
+imax = 300, jmax = 30
+dx = 0.002 , dy = 0.002 
+length = 0.6, width = 0.06
+left_velocity = 0.0016666666666666668
+Le nombre de Reynolds = 10
+Erreur L2 = 0.1901789669906556
+Numero de iteraciones = 864
+erreur = 9.93932905141422e-06
+
+imax = 30000, jmax = 3000
+dx = 2e-05 , dy = 2e-05 
+length = 0.6000000000000001, width = 0.060000000000000005
+left_velocity = 0.0016666666666666668
+Le nombre de Reynolds = 10

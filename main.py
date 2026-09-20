@@ -10,8 +10,8 @@ import os
 #***************************************************************
 # Pre-processing
 #***************************************************************
-imax = 300
-jmax = 30
+imax = 30000
+jmax = 3000
 ux = np.zeros((imax+1, jmax))
 uy = np.zeros((imax, jmax+1))
 ux_star = np.zeros_like(ux)
@@ -39,8 +39,8 @@ apo = np.zeros_like(P)
 #***************************************************************
 # Physical parameters
 #***************************************************************
-dx =2e-3
-dy = 2e-3
+dx =2e-5
+dy = 2e-5
 mu = 1e-1
 rho = 1e4
 Re = 10
@@ -54,9 +54,9 @@ ux[:, :] = left_velocity
 # Solver parameters
 #***************************************************************
 
-alpha = 0.3
-relax_u = 0.5
-relax_P =0.1
+alpha = 1
+relax_u = 0.7
+relax_P =0.3
 conv = 1e-5
 conv_P = 1e-6
 it_max = 50000
