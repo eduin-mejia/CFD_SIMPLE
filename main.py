@@ -43,7 +43,7 @@ dx =2e-3
 dy = 2e-3
 mu = 1e-1
 rho = 1e4
-Re = 100
+Re = 10
 left_velocity = Re * mu /(dy*jmax*rho)
 #left_velocity = 0.25000
 
@@ -57,9 +57,9 @@ ux[:, :] = left_velocity
 alpha = 0.3
 relax_u = 0.5
 relax_P =0.1
-conv = 1e-4
-conv_P = 1e-4
-it_max = 10000
+conv = 1e-5
+conv_P = 1e-6
+it_max = 50000
 Gaus_it_max = 10
 graph_error = np.zeros(it_max)
 erreur = 1.
@@ -74,12 +74,12 @@ print(f"Le nombre de Reynolds = {Re:.2f}")
 # Main SIMPLE loop
 #***************************************************************
 
-with open("Log.txt" ,"w+") as f:
+with open("Log.txt" ,"a+") as f:
     f.write(f"imax = {imax}, jmax = {jmax}\n")
     f.write(f"dx = {dx} , dy = {dy} \n") 
     f.write(f"length = {dx*imax}, width = {dy*jmax}\n" )
     f.write(f"left_velocity = {left_velocity}\n") 
-    f.write(f"Le nombre de Reynolds = {Re:.2f}\n")
+    f.write(f"Le nombre de Reynolds = {Re}\n")
     f.close()
 
 #***************************************************************
@@ -102,7 +102,7 @@ while it < it_max and erreur > conv:
     graph_error[it] = erreur
     it += 1
 
-    if not (it < it_max and erreur > conv):
+    if  not (it < it_max and erreur > conv):
         y_vals = (np.arange(1, jmax+1) - 0.5) * dy
         plt.figure(1)
         plt.plot(4*1.5*left_velocity*y_vals/h*(1 - y_vals/h),y_vals, ls='--',c='black',label='Theo')
@@ -127,7 +127,8 @@ while it < it_max and erreur > conv:
         plt.figure(4)
         x_vals = np.arange(1, imax+1) * dx
         plt.plot(x_vals[::5], P[::5, jmax//2],'+',c='red',label='Simu')
-        plt.plot(x_vals, 8 * mu * 1.5 * left_velocity / (dy * jmax)**2 * (imax*dx - (np.arange(1, imax+1)-1)*dx), ls='--', c='black', label='Theo')
+        ux_theo = 4*1.5*left_velocity*y_vals/h*(1 - y_vals/h)
+        plt.plot(ux_theo, ls='--', c='black', label='Theo')
         plt.title('Pressure(x) vs theoretical')
         plt.xlabel('x (m)')
         plt.ylabel('Pressure (Pa)')
@@ -144,11 +145,17 @@ while it < it_max and erreur > conv:
         plt.show()
 
 
-
+error_L2_ux = 100*np.sqrt(np.sum((ux[imax-5,:] - ux_theo)**2)*dy)/np.sqrt(np.sum(ux_theo**2)*dy)
 if it == it_max:
     print("L'algorithme n'a pas convergé")
 else:
-    print(f"L'algorithme a convergé après {it} itérations")
+    print(f"L'algorithme a convergé après {it} itérations") 
+with open("Log.txt", "a+") as f: 
+    f.write(f"Erreur L2 = {error_L2_ux}\n")
+    f.write(f"Numero de iteraciones = {it}\n")
+    f.write(f"erreur = {erreur}\n")
+    f.write("\n")
+print(f"El error L2 = {error_L2_ux}")
 
 # Affichage final
 #plt.show()
